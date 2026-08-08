@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const strawberryImage = "/assets/hero.png";
+const strawberryImage = "../assets/hero.png";
 
 export default function RawFlavorBanner() {
   return (
