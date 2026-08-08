@@ -9,6 +9,7 @@ import { CakeMarquee } from './components/CakeMarquee'
 import { CakeShowcase } from './components/CakeShowcase'
 import { Testimonials } from './components/Testimonials'
 import { Footer } from './components/Footer'
+import { RawFlavorBanner } from './components/RawFlavorBanner'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
      <CakeMarquee/>
      <CakeShowcase/>
      <Testimonials/>
+     <RawFlavorBanner/>
      <Footer/>
     </>
   )
