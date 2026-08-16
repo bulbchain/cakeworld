@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 
-import strawberryImage from "../assets/hero.png";
+import strawberryImage from "../assets/strawb.png";
+
+import strawberryCut from "../assets/slicestrawb.png";
 
 export default function RawFlavorBanner() {
   return (

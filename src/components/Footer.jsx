@@ -10,13 +10,13 @@ export function Footer() {
         </div>
         <div className="text-sm opacity-90">
           <p className="mb-2 font-semibold">Visit us</p>
-          <p>12 Baker Street, Bandra West</p>
+          <p>12 Mog Lines IDR</p>
           <p>Open daily · 8am – 10pm</p>
         </div>
         <div className="text-sm opacity-90">
           <p className="mb-2 font-semibold">Order on call</p>
           <p>+91 11111111**</p>
-          <p>hello@cakesbakery.com</p>
+          <p>cakesbymonila@gmail.com</p>
         </div>
       </div>
       <p className="mt-10 text-xs opacity-70">© {new Date().getFullYear()} Cakes bakery. All rights reserved.</p>
