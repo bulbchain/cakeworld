@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, FaceAngry, Image, Star, TextWrapIcon } from "lucide-react";
+import { ArrowLeft, ArrowRight, FaceAngry, Image, Star, TextWrapIcon,FaceGrinning, Dessert, CakeIcon } from "lucide-react";
 import heroCake from "../assets/hero-cake.jpg";
 import heroCake2 from "../assets/hero-cake-2.jpg";
 import heroCake3 from "../assets/hero-cake-3.jpg";
@@ -27,8 +27,8 @@ export function Hero() {
     <section id="top" className="grid items-center gap-10 px-6 pb-16 pt-24 md:px-10 lg:grid-cols-2">
       <div className="relative">
         <div className="absolute -left-2 top-6 hidden flex-col items-center gap-4 md:flex lg:-left-4">
-          {[FaceAngry, TextWrapIcon, Image].map((Icon, i) => (
-            <a key={i} href="#" className="text-foreground/60 transition-colors hover:text-primary">
+          {[CakeIcon, Dessert, Image].map((Icon, i) => (
+            <a key={i} href="https://www.instagram.com/" className="text-foreground/60 transition-colors hover:text-primary">
               <Icon className="h-4 w-4" />
             </a>
           ))}
@@ -51,7 +51,7 @@ export function Hero() {
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <a
-              href="#bestsellers"
+              href="#cakes"
               className="rounded-full gradient-primary px-8 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
             >
               ORDER NOW

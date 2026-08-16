@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Star, Plus, Clock } from "lucide-react";
+import { Star, Plus, Minus, Clock } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import chocolate from "../assets/cake-chocolate.jpg";
 import butterscotch from "../assets/cake-butterscotch.jpg";
 import fruit from "../assets/cake-fruit.jpg";
@@ -32,9 +33,82 @@ const filters = [
   "Cheesecake",
 ];
 
+function CartAction({ cake }) {
+  const { items, addItem, setQty } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
+  const cartItem = items.find((i) => i.id === cake.id);
+
+  const stopNav = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleAdd = (e) => {
+    stopNav(e);
+    addItem({ id: cake.id, name: cake.name, price: cake.price, img: cake.img });
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 500);
+  };
+
+  const handleDecrease = (e) => {
+    stopNav(e);
+    if (cartItem) setQty(cake.id, cartItem.qty - 1);
+  };
+
+  const handleIncrease = (e) => {
+    stopNav(e);
+    if (cartItem) setQty(cake.id, cartItem.qty + 1);
+  };
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      {cartItem ? (
+        <motion.div
+          key="qty"
+          initial={{ scale: 0.85, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.85, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          className="flex items-center gap-0.5 rounded-full border border-primary/30 bg-accent px-1 py-1"
+        >
+          <motion.button
+            aria-label="Decrease quantity"
+            whileTap={{ scale: 0.85 }}
+            onClick={handleDecrease}
+            className="grid h-7 w-7 place-items-center rounded-full text-primary transition-colors hover:bg-primary/10"
+          >
+            <Minus className="h-3.5 w-3.5" />
+          </motion.button>
+          <span className="min-w-[1.25rem] text-center text-xs font-bold text-primary">{cartItem.qty}</span>
+          <motion.button
+            aria-label="Increase quantity"
+            whileTap={{ scale: 0.85 }}
+            onClick={handleIncrease}
+            className="grid h-7 w-7 place-items-center rounded-full text-primary transition-colors hover:bg-primary/10"
+          >
+            <Plus className="h-3.5 w-3.5" />
+          </motion.button>
+        </motion.div>
+      ) : (
+        <motion.button
+          key="add"
+          initial={{ scale: 0.85, opacity: 0 }}
+          animate={justAdded ? { scale: [1, 1.12, 1] } : { scale: 1, opacity: 1 }}
+          exit={{ scale: 0.85, opacity: 0 }}
+          whileTap={{ scale: 0.92 }}
+          transition={{ type: "spring", stiffness: 400, damping: 20 }}
+          onClick={handleAdd}
+          className="flex items-center gap-1 rounded-full gradient-primary px-3 py-2 text-xs font-semibold text-primary-foreground shadow-soft transition-shadow hover:shadow-md sm:px-4"
+        >
+          <Plus className="h-3.5 w-3.5" /> Add
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+}
+
 export default function Bestsellers() {
   const [active, setActive] = useState("All Cakes");
-  const { addItem } = useCart();
 
   const visible = active === "All Cakes" ? cakes : cakes.filter((c) => c.tags.includes(active));
 
@@ -90,15 +164,7 @@ export default function Bestsellers() {
                   <span className="font-display text-lg font-black text-primary sm:text-xl">
                     {formatINR(c.price)}
                   </span>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      addItem({ id: c.id, name: c.name, price: c.price, img: c.img });
-                    }}
-                    className="flex items-center gap-1 rounded-full gradient-primary px-3 py-2 text-xs font-semibold text-primary-foreground sm:px-4"
-                  >
-                    <Plus className="h-3.5 w-3.5" /> Add
-                  </button>
+                  <CartAction cake={c} />
                 </div>
                 <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <Clock className="h-3.5 w-3.5" /> 2–3 hrs delivery

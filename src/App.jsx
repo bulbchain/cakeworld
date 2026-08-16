@@ -1,4 +1,7 @@
 import './App.css'
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { scrollToSection } from './utils/scroll'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { ShopByCategory } from './components/ShopByCategory'
@@ -11,10 +14,17 @@ import { Testimonials } from './components/Testimonials'
 import { Footer } from './components/Footer'
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const target = location.state?.scrollTo;
+    if (!target) return;
+    requestAnimationFrame(() => scrollToSection(target));
+    window.history.replaceState({}, document.title);
+  }, [location]);
 
   return (
     <>
-     <Navbar/>
      <Hero/>
      <ShopByCategory/>
      <ShopByOccasion/>

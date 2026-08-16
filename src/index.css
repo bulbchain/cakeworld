@@ -76,8 +76,17 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   * {
     border-color: var(--color-border);
+  }
+
+  section[id],
+  footer[id] {
+    scroll-margin-top: 5.5rem;
   }
 
   body {

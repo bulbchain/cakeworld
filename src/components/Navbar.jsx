@@ -1,40 +1,67 @@
 import { useState } from "react";
-import { Search, ShoppingBag, Menu, Cake, X } from "lucide-react";
+import { Search, ShoppingBag, Menu, X } from "lucide-react";
+import cakeLogo from "../assets/cakeLogo.png";
 import { useCart } from "../context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { scrollToSection, sectionIdFromLink } from "../utils/scroll";
 
 const links = ["Home", "Cakes", "Occasions", "Custom Builder", "Contact", "Cart"];
-
-const hrefFor = (l) => {
-  if (l === "Home") return "/";
-  if (l === "Cart") return "/cart";
-  return `#${l.toLowerCase().replace(/\s+/g, "-")}`;
-};
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const { count } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavClick = (e, link) => {
+    if (link === "Cart") {
+      e.preventDefault();
+      setOpen(false);
+      navigate("/cart");
+      return;
+    }
+
+    e.preventDefault();
+    setOpen(false);
+
+    const sectionId = sectionIdFromLink(link);
+
+    if (location.pathname !== "/") {
+      navigate("/", { state: { scrollTo: sectionId } });
+      return;
+    }
+
+    scrollToSection(sectionId);
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    setOpen(false);
+
+    if (location.pathname !== "/") {
+      navigate("/", { state: { scrollTo: "top" } });
+      return;
+    }
+
+    scrollToSection("top");
+  };
 
   return (
-    // <header className="relative flex items-center justify-between gap-4 px-5 py-4 md:px-10 md:py-5">
-     <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-4 
-                   bg-white px-5 py-4 shadow-md md:px-10 md:py-5">
-     <a href="/" className="flex items-center gap-2">
-        <span className="grid h-10 w-10 place-items-center rounded-2xl gradient-primary text-primary-foreground">
-          <Cake className="h-5 w-5" />
-        </span>
-        <span className="leading-none">
-          <span className="block font-display text-lg font-black tracking-tight">Cakes</span>
-          <span className="block font-script text-xl text-primary">bakery.</span>
-        </span>
+    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-4 bg-white px-5 py-4 shadow-md md:px-10 md:py-5">
+      <a href="/" onClick={handleLogoClick} className="flex shrink-0 items-center">
+        <img
+          src={cakeLogo}
+          alt="Monila's cakes & bakes"
+          className="h-10 w-auto object-contain sm:h-12"
+        />
       </a>
 
       <nav className="hidden items-center gap-8 lg:flex">
         {links.map((l, i) => (
           <a
             key={l}
-            href={hrefFor(l)}
+            href={l === "Cart" ? "/cart" : l === "Home" ? "/" : `#${sectionIdFromLink(l)}`}
+            onClick={(e) => handleNavClick(e, l)}
             className={`text-sm font-medium transition-colors hover:text-primary ${
               i === 0 ? "text-primary" : "text-muted-foreground"
             }`}
@@ -75,8 +102,8 @@ export function Navbar() {
           {links.map((l) => (
             <a
               key={l}
-              href={hrefFor(l)}
-              onClick={() => setOpen(false)}
+              href={l === "Cart" ? "/cart" : l === "Home" ? "/" : `#${sectionIdFromLink(l)}`}
+              onClick={(e) => handleNavClick(e, l)}
               className="block rounded-2xl px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-primary"
             >
               {l}
