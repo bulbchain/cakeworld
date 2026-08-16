@@ -4,6 +4,7 @@ import cakeLogo from "../assets/cakeLogo.png";
 import { useCart } from "../context/CartContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { scrollToSection, sectionIdFromLink } from "../utils/scroll";
+import { motion } from "framer-motion";
 
 const links = ["Home", "Cakes", "Occasions", "Custom Builder", "Contact", "Cart"];
 
@@ -49,11 +50,31 @@ export function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-4 bg-white px-5 py-4 shadow-md md:px-10 md:py-5">
       <a href="/" onClick={handleLogoClick} className="flex shrink-0 items-center">
-        <img
-          src={cakeLogo}
-          alt="Monila's cakes & bakes"
-          className="h-10 w-auto object-contain sm:h-12"
-        />
+         <motion.img
+  src={cakeLogo}
+  alt="Monila's cakes & bakes"
+  initial={{
+    opacity: 0,
+    scale: 0.3,
+    rotate: -20,
+  }}
+  animate={{
+    opacity: 1,
+    scale: 1,
+    rotate: -8,
+  }}
+  transition={{
+    duration: 0.8,
+    delay: 0.4,
+    type: "spring",
+    stiffness: 120,
+  }}
+  whileHover={{
+    scale: 1.05,
+    rotate: -5,
+  }}
+  className="h-10 w-auto object-contain sm:h-12"
+/>
       </a>
 
       <nav className="hidden items-center gap-8 lg:flex">
