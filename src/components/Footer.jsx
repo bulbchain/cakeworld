@@ -15,7 +15,7 @@ export function Footer() {
         </div>
         <div className="text-sm opacity-90">
           <p className="mb-2 font-semibold">Order on call</p>
-          <p>+91 98765 43210</p>
+          <p>+91 11111111**</p>
           <p>hello@cakesbakery.com</p>
         </div>
       </div>

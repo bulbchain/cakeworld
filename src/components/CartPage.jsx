@@ -60,7 +60,7 @@ export default function CartPage() {
     const encodedMessage = encodeURIComponent(message);
     
     // WhatsApp API URL (replace with your business number)
-    const whatsappUrl = `https://wa.me/917263028064?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/918643018008?text=${encodedMessage}`;
     
     // Open WhatsApp
     window.open(whatsappUrl, "_blank");
